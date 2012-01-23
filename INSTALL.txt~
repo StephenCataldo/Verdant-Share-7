@@ -1,0 +1,89 @@
+Please follow these instructions, just enabling the module
+will not work smoothly.
+
+Verdant_Share uses a lot of standard components (cck, flags, views) that you're
+welcome to mess with -- please post your story of how you use this module:
+
+[0] Giving node's locations, and setting them as cck fields, are options
+that are supposed to conflict.  In May, 2011, I'm setting locations for the
+whole node... if you've enabled the cck-location module [     ] 
+you'll have to hope someone has fixed the conflict, or change the way
+the view and cck work here.
+
+[1] jQuery UI is required, and can be difficult to set up -- please enable
+before attempting to enable verdant_share.
+
+If it's not already enabled (used here for date popups, work around
+should be easy if you don't use it at all, but the import process gets
+messed up if jQuery UI isn't enable-able), I seemed to need to 
+enable jQuery Update *first*, then follow the other instructions in jQuery UI,
+or whatever it takes, and don't attempt to enable Verdant Share until
+jQuery UI is running.
+( @todo: find great how-to notes and link to them, or remove dependency )
+
+[2] Once jQuery UI is enabled, make sure the other modules are present,
+and when you enable Verdant_Share, the rest should be enabled automatically.
+
+* Something uses "A PHP code input format has been created."  This
+didn't create any prolems with my setup, let me know if it does for you!
+
+
+[3] Maps: gmap module needs to be running (you can get it running later), which 
+involves getting a Google Maps API Key. See admin/settings/gmap
+You'll probably want to center the map on your event, and zoom
+in based on how far average people are driving. 
+
+[4] Blocks: The view will create a chart and map for people to share rides.
+People's posts are created using content_profile, shown in a block
+on the pages with the chart or map.  Go to the blocks page
+and move "Ride Share Profile Block" to an appropriate region (eg, Left Sidebar).
+I tend to ignore the Exposed Form blocks, but they may be interesting to
+play with, especially if you'd like to make major changes.
+
+[5] Menus: The chart and map are placed in your menu (as I write this, as tabs,
+but I may fiddle with that faster than I document).  
+Move them, tab or un-tab them, display just one or the other as preferred.
+
+[6] GMAP markers must be enabled by hand (for now).  Go to the vocubulary page
+for "Means of Transit" and enable "GMap markers."  Then go to each term
+and give them an image.  
+	@help = have you seen another module that creates a taxonomy?
+	
+	bus = small dark green, 
+	offer = small yellow
+	either = small organge
+	need ride = small bright red
+	@todo: Ideally, someone will great new images.
+	@note: go back to admin/settings/gmap and Regenerate marker cache, if needed
+	@note: that still didn't do it, not sure why
+
+[g] Go to settings for location and click on "Use a Google Map to set latitude and longitude" if you haven't already.
+
+[g2] Go to permissions ( admin/user/permissions ), and set location module:
+submit latitude/longitude ok for authenticated users
+
+[7] Content Type: Locations aren't being exported/imported correctly,
+so set the minimum number of locations to 1.  ( @todo: can I import this info, hand
+coding, even if the export skips it?) 
+
+Being fixed... Automatic title wasn't part of the cck export 
+(haven't even looked at this issue yet).  ** may have fixed this. the fix
+seems clunkier than this recommendation **  ** BEING FIXED **
+Go to the share-ride content type, and
+enable "Automatic title generation."  Set it to 
+"Automatically generate the title
+and hide the title field," using this pattern (or whatever you like):
+[author-name]'s rideshare
+
+[8] Contact: recommended to set contract form default to enabled by default
+at admin/build/contact/settings, and think about users who may have
+signed up already (including your admin account).
+
+[9] Recommended, enable user pictures at admin/user/settings
+
+[10] Optional, put the conference on the map.  Haven't thought about this yet...
+
+* Content Taxonomy didn't quite come through.  Why?  Is it about the order 
+things are enabled?  Trying new things with each round.  It works if I put the
+code in the enable section instead of install.
+

@@ -1,0 +1,135 @@
+<?php
+
+// Do we want to use _enable, or _install ??  I think just _install
+
+/**
+	* Implementation of hook_install().
+ *
+ * @notes: This code from http://groups.drupal.org/node/5272#comment-87285
+ * except the first line drupal_get_path taken from example above it.
+ *
+ * Note: Could replace the content_copy implementation with 
+ *	node_type_save($content['type']);
+ *	content_field_instance_create($field);
+ *
+ * Permissions?  See _travelanion_permission_add
+ */
+function verdant_share_install() {
+
+	/* (1) cck */
+	// do I need to make sure something besides cck is included? !!!
+
+	/*weird error no valid 'content_copy_import_form' callback, try adding this:  */
+	/* if I solve it, return to:
+		http://drupal.org/node/412536
+	 */
+  include_once('./'. drupal_get_path('module', 'node') .'/content_types.inc');
+	include_once('./'. drupal_get_path('module', 'content') .'/includes/content.admin.inc');
+  include_once('./'. drupal_get_path('module', 'content_profile') .'/content_profile.module');  // grasping at straws, toggle and see if it helps
+	// this seems to move me forward to a new error further down...
+	include_once('./'. drupal_get_path('module', 'content_copy') .'/content_copy.module');
+	/* The following modules must be enabled for this import to work: fieldgroup, content_taxonomy, content_taxonomy_options, date.
+	 */
+	// how could this help, content_taxonomy is about to do it anyway.
+	drupal_load('module', 'content');
+	content_clear_type_cache();
+
+
+	/* (2) taxonomy */
+	module_load_include('inc', 'verdant_share', 'verdant_share_taxonomy');
+
+
+
+
+
+	$module_list = array('fieldgroup', 'content_taxonomy', 'content_taxonomy_options', 'date'); // note: notes online say this method doesn't call _install hook.
+	module_enable($module_list);
+	// pound, try again...
+	content_clear_type_cache();	
+
+	module_load_include('inc', 'install_profile_api', 'contrib/content_copy');
+
+
+  // Get path to the file where I pasted my CCK export, which is inside this module's folder
+  //$file = __DIR__ . '/verdant_ride.cck_import.inc';
+
+  // Call function.  I want to create a new type, so I don't provide a second argument.
+	// Not sure if this worked! Got other way working first.
+	//  install_content_copy_import_from_file($file);
+
+	_verdant_ride_taxonomy();
+	drupal_set_message("Taxonomy for ridesharing created on install.");
+
+	drupal_set_message("CCK creation message should follow.");
+
+	node_get_types('types', NULL, TRUE); // trick to fix cache issues,
+		//http://source.mihelac.org/2008/04/22/drupal-forms-first-argument-is-expected-to-be-a-valid-callback/
+	
+	/* (1) cck, oops, again */
+	// This seems to work in enable, but give me errors here.
+	/* !!!! giving up for now, moving to enable, this is having one dependency
+			issue after another */
+	//!!!$filename = drupal_get_path('module','verdant_share') . "/verdant_ride_cck.inc";
+
+	//!!!$content_type = file_get_contents($filename);
+
+	//!!!drupal_get_form('content_copy_import_form');
+
+	// Build form state
+	$form_state = array(
+		'values' => array(
+			'type_name' => '<create>',
+			'macro' => $content_type,
+		),
+	);
+	// content_copy is a module for importing & exporting CCK types
+	//this is giving me errors, like:
+	/* 
+	 * warning: call_user_func_array() [function.call-user-func-array]: First argument 
+	 is expected to be a valid callback, 'content_copy_import_form' was given in /usr
+	 /www/users/cataldo/drupal-6.20/includes/form.inc on line 378.
+	 */
+	//!!!drupal_execute("content_copy_import_form", $form_state);
+	
+
+	content_clear_type_cache();
+	//drupal_set_message("Attempted to create the cck type 'Share the Ride' in verdant_share.install  -- did it work?");
+
+	/* (3) views is done in a more default way */
+
+	drupal_set_message("Verdant share rideshare module installed.  Go to " .
+		l("blocks menu", "admin/build/block") . 
+		" and move <em>Ride Share Profile Block into a region.
+		Then " .
+		l("edit share-ride content type", "admin/content/node-type/share-ride") .	
+		" and edit the Location Collection settings... you might make the minimum
+	  1 to require a location, and decide if you want Street, City, etc.  My
+		preference (@todo: make default) is Location name, city, state, country,
+			and definately Coordinate Chooser.
+			[no longer needed if code works...]and set Automatic title generation to 
+		<em>Automatically generate the title and hide the title field</em>
+		and enter something like this as the Pattern for the title:
+		<em>[author-name]'s rideshare</em>"
+		);
+}
+
+
+
+/**
+ * Implementation of hook_uninstall().
+ *
+ * Terribly, terribly incomplete !!!
+ */
+function verdant_share_uninstall() {
+	$node_type = 'share_ride';
+
+	// Delete the content type.
+	node_type_delete($node_type);
+
+	// Should delete the cck fields, what are they?
+	//  module_load_include('inc', 'content', 'includes/content.crud');
+	//  content_field_instance_delete('field_travel_type', $node_type);
+
+	// @info The view is installed by using hook_views_default_views(). Therefore,
+	//   when the module is disabled or uninstalled, the view will go away itself.
+}

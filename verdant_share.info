@@ -1,0 +1,34 @@
+name = Verdant Rideshare for Events
+description = Intended for a conference's website, to coordinate ridesharing among attendees going to the same location. (One of 3: flight, carpool, and roomshare)
+core = 7.x
+version = "7.x-0.01"
+configure = admin/config/content/verdant/rides
+package = Verdant Share
+
+// Can I require the feature?
+
+// D7: work on the dependencies... 
+
+dependencies[] = features
+dependencies[] = views
+dependencies[] = views_ui
+dependencies[] = text
+dependencies[] = date
+dependencies[] = date_popup
+dependencies[] = date_views
+     // implements "between" in views
+
+dependencies[] = location
+dependencies[] = flag
+dependencies[] = gmap_taxonomy
+dependencies[] = gmap
+//D7?? dependencies[] = install_profile_api  
+/* content profile import */
+//D7?? dependencies[] = location_node
+dependencies[] = php
+dependencies[] = contact
+//D7?? dependencies[] = fieldgroup
+dependencies[] = auto_nodetitle
+//D7?? dependencies[] = content_taxonomy_options
+			/* php filter for the smart header in the view, not sure if will
+			ultimately need? */ 

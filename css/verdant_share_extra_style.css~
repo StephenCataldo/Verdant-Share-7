@@ -1,0 +1,35 @@
+
+/*** This is from gmic2010, and not sure if it is implemented or not ****/
+/* needs lots of cleanup just to see what is being used and what isn't,
+ * after the first section */
+
+/*** tighten up block for form-entry for rideshare */
+#verdant_rideshare .node-form div.standard {
+	overflow: hidden;
+}
+#verdant_rideshare .node-form div.standard:hover {
+	overflow: visible;
+		/* this could be improved, clearer block look */
+}
+#verdant_rideshare .location .form-item label {
+	float: none;
+	  /* not inline in tight space */
+}
+#verdant_rideshare .location-current-coordinates-fieldset {
+	display: none;
+}
+
+
+/* removing latitude tools surprisingly difficult, other form changes
+ * done in module */
+#verdant_rideshare #gmap-auto2map-locpick_latitude0-wrapper,
+#verdant_rideshare div.description,
+#verdant_rideshare #gmap-auto2map-locpick_longitude0-wrapper {
+	  display: none; /* If you wish to supply your own latitude and longitude ... */
+}
+#gmap-auto1map-locpick_longitude0-wrapper,
+#gmap-auto1map-locpick_latitude-wrapper {
+	display: none;
+}
+
+

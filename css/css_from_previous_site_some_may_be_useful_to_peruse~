@@ -1,0 +1,103 @@
+/***************** might be real, might not, css from last site *******/
+
+Some of this is useful for limiting the size of the block, if you want to.
+
+#verdant_rideshare .location .form-item input {
+	width: 280px;  /* safe to adjust this: make it fit your block width */
+	margin-left: 5px;
+	margin-right: 5px; /* these margins remove the scrollbar from the map,
+				not sure what that's all about */
+}
+select #edit-field-arrival-time-value { /* want to get rid of scrollbars
+	on select box, didn't spend time seeing why this doesn't do it */
+	height: 30px;
+}
+#verdant_rideshare .location .form-item input.form-checkbox  {
+	width: auto;
+	margin-left: 0px;
+	padding-left: 0px;
+}
+#edit-field-arrival-time-value-wrapper { 
+	width: 49%;
+	float: left;
+}
+#edit-field-departure-time-value-wrapper { 
+	float: right;
+	width: 45%;
+}
+
+/*******  Share ******/
+.node-type-share-ride,
+.node-type-share-flight,
+.node-type-share-room {
+  border-bottom: 2px solid #ccc;
+  margin-bottom: 1.6em;
+  background: #f6f6f6;
+  padding: 5px;
+}
+div.contact-link img  {
+  margin-bottom: -4px;
+}
+div.contact-link {
+  margin-bottom: 6px;
+}
+.node-type-share-ride div.picture,
+.node-type-share-flight div.picture,
+.node-type-share-room div.picture {
+  float: left;
+  padding: 2px;
+  margin-top: -5px;
+  margin-left: -5px;
+}
+.node-type-share-ride h3 {   /* Location poorly marked up */
+  margin-top: 0;
+}
+fieldset.group-travel-time {
+  width: 250px;
+  float: left;
+}
+
+
+fieldset.group-seats {
+  width: 200px;
+}
+.node-type-share-ride h2,
+.node-type-share-flight h2,
+.node-type-share-room h2 {
+  font-size: 1em;
+  padding-left: 10px;
+}
+.node-type-share-room div.meta {
+  display: none;
+}
+.node-type-share-room ul.links {
+  clear: left;
+}
+
+.views-row .node-type-share-room .field,
+.field-field-room-gender,
+.field-field-room-sleep {
+  font-size: .9em;
+  float: left;
+  display: block;
+  padding: 2px;
+  border: 1px solid #ddd;
+  min-height: 5.5em;
+}
+.views-row .node-type-share-room .field .field-label {
+  font-size: .8em;
+}
+.views-row .node-type-share-room p {
+  clear: left;
+}
+
+/***** Little changes *****/
+div .verdant-message {
+	border: 1px solid blue;
+	background: #f0ffff;
+	padding: 4px;
+	margin: 6px;
+	font-size: 1.3em;
+	text-align: center;
+}
+
