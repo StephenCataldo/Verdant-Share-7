@@ -29,9 +29,16 @@ didn't create any prolems with my setup, let me know if it does for you!
 
 
 [3] Maps: gmap module needs to be running (you can get it running later), which 
-involves getting a Google Maps API Key. See admin/settings/gmap
+involves getting a Google Maps API Key. See admin/config/services/gmap
 You'll probably want to center the map on your event, and zoom
 in based on how far average people are driving. 
+
+Required:
+Use a Goole Map to set latitude and longitude 
+ at admin/config/content/location
+
+Other Options: you can edit the Content Type to collect different details
+on the address or change the default country.  Locative information at /admin/structure/types/manage/share-ride
 
 [4] Blocks: The view will create a chart and map for people to share rides.
 People's posts are created using content_profile, shown in a block

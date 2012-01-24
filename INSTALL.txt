@@ -33,6 +33,13 @@ involves getting a Google Maps API Key. See admin/config/services/gmap
 You'll probably want to center the map on your event, and zoom
 in based on how far average people are driving. 
 
+Required:
+Use a Goole Map to set latitude and longitude 
+ at admin/config/content/location
+
+Other Options: you can edit the Content Type to collect different details
+on the address or change the default country.  Locative information at /admin/structure/types/manage/share-ride
+
 [4] Blocks: The view will create a chart and map for people to share rides.
 People's posts are created using content_profile, shown in a block
 on the pages with the chart or map.  Go to the blocks page

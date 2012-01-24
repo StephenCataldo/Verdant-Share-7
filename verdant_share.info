@@ -21,7 +21,9 @@ dependencies[] = date_views
 dependencies[] = location
 dependencies[] = flag
 dependencies[] = gmap_taxonomy
+dependencies[] = gmap_location
 dependencies[] = gmap
+dependencies[] = location_node
 //D7?? dependencies[] = install_profile_api  
 /* content profile import */
 //D7?? dependencies[] = location_node

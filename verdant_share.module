@@ -44,6 +44,8 @@ function verdant_share_block_view($delta = '') {
 			$form_id = 'share_ride_node_form'; // item_node_form
 			$share_node;
 
+//@ToDo rewrite this copied code
+
 			// Get $nid of user's share_ride, if they entered one
 			$query = new EntityFieldQuery;
 			$result = $query
@@ -99,7 +101,6 @@ function verdant_share_block_view($delta = '') {
 						content_profile_page_edit($type, $account);
 					 return $blocks;
 			}
-die("Here.  delta is $delta");
 }
 
 
@@ -151,6 +152,32 @@ function verdant_share_views_api() {
 		);
 }
 
+/**
+ * function verdant_content_profile_load
+ * based on content_profile's function
+ */
+function verdant_content_profile_load($type = 'share_ride') {
+	global $user;
+
+	// Get $nid of user's share_ride, if they entered one
+	$query = new EntityFieldQuery;
+	$result = $query
+		->entityCondition('entity_type', 'node')
+		->propertyCondition('type', $type)
+		->propertyCondition('uid', $user->uid)
+		->execute();
+
+	if (!empty($result['node'])) {
+		//--> Yes, they already have a post 
+		// @ToDo change this function to one that assumes there
+		//	is only one matching node.  Or, deal with multiple results
+		//  if we decide on multiple posts per person.
+		$nodes = node_load_multiple(array_keys($result['node']));
+		return array_shift($nodes);
+	}
+	return null;
+}	
+
 
 /**
  *	verdant_share_date_filter is called from the view, and returns
@@ -173,9 +200,8 @@ function verdant_share_views_api() {
 function verdant_share_date_filter() {
 	/* Get the user's content_profile for share_ride */
 	$type = 'share_ride';
-  global $user;
-	$ride_share = content_profile_load($type, $user->uid, $lang = '')	;
-
+	$ride_share = verdant_content_profile_load($type);
+	
 	// MOVE_TO_SETTINGS
 	$timediameter = 4;  /* diameter of window -- hours, intended for text.  Not used yet, is it? */
 	$time = 30 * $timediameter; // 1 hour diameter = 30 minute radius
@@ -185,7 +211,7 @@ function verdant_share_date_filter() {
 	$date_format_string = "Y-m-d\TH:i:s";  //!!!! not sure what \T is
 
 	//--- ARRIVAL window ---//
-	$arrival = $ride_share->field_arrival_time[0]['value'];
+	$arrival = $ride_share->field_arrival_time['und'][0]['value'];
 
 	/* warning/help/TO-DO for future:
 	 *	Dates are doing very weird things *
@@ -220,7 +246,7 @@ function verdant_share_date_filter() {
 
 	
 	//---  DEPARTURE window ---//
-	$departure = $ride_share->field_departure_time[0]['value'];
+	$departure = $ride_share->field_departure_time['und'][0]['value'];
 	$departure_stamp = strtotime( $departure)  + $tz_offset;
 
 	// depart after beginning of window
@@ -242,22 +268,24 @@ function verdant_share_date_filter() {
 	$middlefavorites = "flagged_favorites=All&unflagged_remove=0";
 	$favorites = "flagged_favorites=1&unflagged_remove=0";
 	$check_removed = "flagged_favorites=All&unflagged_remove=1";
-	
+
+	//--- Get base url for chart or view, eg share/ride/map
+	$base = 'share/ride/map'; //limited_url();
 	
 	//--- Create the links to pass to the view --//
 	/* (note: also considered just passing the fragments, so could
 		be edited in the view, that is an easy switch to make */
-	$l_all = "<a href=\"$base?$middlefavorites\" 
+	$l_all = "<a href=\"/$base?$middlefavorites\" 
 			title=\"All shares except those you have removed\" >Show All</a>";
-	$l_arrive = "<a href=\"$base?$middlefavorites&$arrive_fragment\" 
+	$l_arrive = "<a href=\"/$base?$middlefavorites&$arrive_fragment\" 
 			title=\"See people arriving nearly the same time as you\" >By Arrival -- $timediameter hour window</a>";
-	$l_depart = "<a href=\"$base?$middlefavorites&$depart_fragment\" 
+	$l_depart = "<a href=\"/$base?$middlefavorites&$depart_fragment\" 
 			title=\"See people departing nearly the same time as you\" >By Departure  -- $timediameter hour window</a>";
-	$l_match = "<a href=\"$base?$middlefavorites&$depart_fragment&$arrive_fragment\" 
+	$l_match = "<a href=\"/$base?$middlefavorites&$depart_fragment&$arrive_fragment\" 
 			title=\"See people traveling at about the same times as you, both arrival and departure\" >Both Times</a>";
-	$l_favs = "<a href=\"$base?$favorites\" 
+	$l_favs = "<a href=\"/$base?$favorites\" 
 			title=\"Only see people clicked as favorites\" >Favorites Only</a>";
-	$l_removed = "<a href=\"$base?$check_removed\" style=\"font-size: .9em;\"
+	$l_removed = "<a href=\"/$base?$check_removed\" style=\"font-size: .9em;\"
 			title=\"Reconsider posts you've previously removed\" >Reconsider Removed</a>";
 	
 	$id = "views-exposed-form-verdant-module-generated-rideshare-page-2"; // !!!
@@ -325,15 +353,24 @@ function verdant_share_form_alter(&$form, $form_state, $form_id) {
  *  See: http://drupal.org/node/1074616#comment-4183638
  */
 function share_ride_submit($form, &$form_state) {
-		if ( $_GET['q'] == 'share/ride/map' ) {
-			$form_state['redirect'] = 'share/ride/map';
+	$form_state['redirect'] = limited_url();
 
-		} else {
-			$form_state['redirect'] = 'share/ride/chart';
-		}
-		// @ToDo warning: docs tell admin ok to change these URLS !!!
+	// @ToDo warning: docs tell admin ok to change these URLS !!!
 }
-					 
+
+/* function limited_current_url		
+ *  return current url from among limited set 
+ */
+function limited_url() {
+	if ( $_GET['q'] == 'share/ride/map' ) {
+		return 'share/ride/map';
+	} else {
+		return 'share/ride/chart';
+	}
+}
+
+
+
 /* Views for matching times */
 /* http://thedrupalblog.com/passing-date-ranges-view-arguments */
 // define the db_rewrite_sql hook:
@@ -403,5 +440,6 @@ $viewName = 'MYVIEWNAME';
 $arg = array('2008-01-01','2008-12-31');
 $viewsHtml = views_embed_view($viewName, 'default', $arg);
 ?>
- */
+		 */
+
 
