@@ -326,12 +326,17 @@ function verdant_share_form_alter(&$form, $form_state, $form_id) {
 		$form['actions']['submit']['#submit'][] = 'share_ride_submit';
 
 
-		// Keep form super-simple	 for users
-		
-		// Can create these blocks by hand, for now.
-		$form['body_field']['body']['#rows'] = 3;
-		$form['body_field']['teaser_include']['#access'] = FALSE;
-		unset($form['body_field']['format']);
+		// Changing the form display ... some of this written in D6
+		//  so look for b.s. that doesn't do anything
+		//D6$form['body_field']['body']['#rows'] = 3;
+		//D6$form['body_field']['teaser_include']['#access'] = FALSE;
+
+		/*D7, these efforts fail...
+		unset($form['field_description']['und'][0]['format']);
+		unset($form['field_description']['und'][0]['#columns'][1]); // = format
+			this sure looks good, removes the column, must not be it.
+		 */
+		//unset($form['body_field']['format']);
 		$form['comment_settings']['#access'] = FALSE;
 		$form['menu']['#access'] = FALSE;
 		$form['path']['#access'] = false;
@@ -339,6 +344,12 @@ function verdant_share_form_alter(&$form, $form_state, $form_id) {
 		$form['options']['#access'] = false;
 		$form['revision_information']['#access'] = false;
 		// Want to remove long, lat boxes and some text
+
+		// Keep form super-simple	 for users
+		/*print "<pre>";
+		//Thisisn't working yet.	
+		print_r($form['field_description']['und'][0]['#columns']);
+		print "</pre>";*/
 
 		// !!! can this go to inc file?
 		$form['locations'][0]['#collapsed'] = 0;

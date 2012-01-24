@@ -275,17 +275,17 @@ function verdant_share_date_filter() {
 	//--- Create the links to pass to the view --//
 	/* (note: also considered just passing the fragments, so could
 		be edited in the view, that is an easy switch to make */
-	$l_all = "<a href='/$base?$middlefavorites' 
+	$l_all = "<a href=\"/$base?$middlefavorites\" 
 			title=\"All shares except those you have removed\" >Show All</a>";
-	$l_arrive = "<a href=/'$base?$middlefavorites&$arrive_fragment\" 
+	$l_arrive = "<a href=\"/$base?$middlefavorites&$arrive_fragment\" 
 			title=\"See people arriving nearly the same time as you\" >By Arrival -- $timediameter hour window</a>";
-	$l_depart = "<a href=/\"$base?$middlefavorites&$depart_fragment\" 
+	$l_depart = "<a href=\"/$base?$middlefavorites&$depart_fragment\" 
 			title=\"See people departing nearly the same time as you\" >By Departure  -- $timediameter hour window</a>";
-	$l_match = "<a href=/\"$base?$middlefavorites&$depart_fragment&$arrive_fragment\" 
+	$l_match = "<a href=\"/$base?$middlefavorites&$depart_fragment&$arrive_fragment\" 
 			title=\"See people traveling at about the same times as you, both arrival and departure\" >Both Times</a>";
-	$l_favs = "<a href=/\"$base?$favorites\" 
+	$l_favs = "<a href=\"/$base?$favorites\" 
 			title=\"Only see people clicked as favorites\" >Favorites Only</a>";
-	$l_removed = "<a href=/\"$base?$check_removed\" style=\"font-size: .9em;\"
+	$l_removed = "<a href=\"/$base?$check_removed\" style=\"font-size: .9em;\"
 			title=\"Reconsider posts you've previously removed\" >Reconsider Removed</a>";
 	
 	$id = "views-exposed-form-verdant-module-generated-rideshare-page-2"; // !!!
@@ -326,12 +326,17 @@ function verdant_share_form_alter(&$form, $form_state, $form_id) {
 		$form['actions']['submit']['#submit'][] = 'share_ride_submit';
 
 
-		// Keep form super-simple	 for users
-		
-		// Can create these blocks by hand, for now.
-		$form['body_field']['body']['#rows'] = 3;
-		$form['body_field']['teaser_include']['#access'] = FALSE;
-		unset($form['body_field']['format']);
+		// Changing the form display ... some of this written in D6
+		//  so look for b.s. that doesn't do anything
+		//D6$form['body_field']['body']['#rows'] = 3;
+		//D6$form['body_field']['teaser_include']['#access'] = FALSE;
+
+		/*D7, these efforts fail...
+		unset($form['field_description']['und'][0]['format']);
+		unset($form['field_description']['und'][0]['#columns'][1]); // = format
+			this sure looks good, removes the column, must not be it.
+		 */
+		//unset($form['body_field']['format']);
 		$form['comment_settings']['#access'] = FALSE;
 		$form['menu']['#access'] = FALSE;
 		$form['path']['#access'] = false;
@@ -339,6 +344,12 @@ function verdant_share_form_alter(&$form, $form_state, $form_id) {
 		$form['options']['#access'] = false;
 		$form['revision_information']['#access'] = false;
 		// Want to remove long, lat boxes and some text
+
+		// Keep form super-simple	 for users
+		/*print "<pre>";
+		//Thisisn't working yet.	
+		print_r($form['field_description']['und'][0]['#columns']);
+		print "</pre>";*/
 
 		// !!! can this go to inc file?
 		$form['locations'][0]['#collapsed'] = 0;
