@@ -55,6 +55,9 @@ Move them, tab or un-tab them, display just one or the other as preferred.
 for "Means of Transit" and enable "GMap markers."  Then go to each term
 and give them an image.  
 	@help = have you seen another module that creates a taxonomy?
+	-->Haven't seen another module, but here's a good guide to creating
+	vocabularies and terms programmatically: 
+	http://steindom.com/articles/creating-vocabularies-and-taxonomy-terms-programmatically-drupal-7
 	
 	bus = small dark green, 
 	offer = small yellow
