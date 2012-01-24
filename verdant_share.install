@@ -1,0 +1,78 @@
+<?php
+
+// Do we want to use _enable, or _install ??  I think just _install
+// Install seems appropriate when adding data models to the application,
+// for this module, that means enabling the feature. All the other enable/disable
+// stuff should be handled appropriately by the dependencies.
+
+/**
+ * Implementation of hook_install().
+ *
+ *
+ * Permissions?  See _travelanion_permission_add
+ */
+function verdant_share_install() {
+
+
+
+  //Enable the default verdant_share_7 feature
+	$module_list = array('verdant_share_7');
+
+  module_enable($module_list);
+
+	drupal_set_message("Rideshare feature enabled. Customize views, content types,
+    and taxonomies to change rideshare behavior. See the readme.");
+}
+
+/**
+ * Define the unique permissions belonging to the rideshare module.
+ *
+ * Implements hook_permission()
+ *
+ * @return <type>
+ */
+function verdant_share_permission(){
+  return array(
+    'post rideshare' => array(
+      'title' => t('Post a rideshare entry'),
+      'description' => t('Allows a user to post a rideshare entry.'),
+    ),
+  );
+}
+
+/**
+ * When the module is enabled, give authenticated users the ability to
+ * post rideshare entries by default.
+ *
+ * Implements hook_enable()
+ * 
+ */
+function verdant_share_enable(){
+  $permissions = array('post rideshare');
+  user_role_change_permissions(DRUPAL_AUTHENTICATED_USER, $permissions);
+}
+
+/**
+ * When the module is diabled, revoke the privelege to create rideshare
+ * posts.
+ *
+ * Implements hook_disable()
+ */
+function verdant_share_disable(){
+  $permissions = array('post rideshare');
+  $roles = user_roles();
+  foreach ($roles as $rid => $name) {
+    user_role_revoke_permissions($rid, $permissions);
+  }
+}
+
+
+/**
+ * Remove the default verdant_share_7 feature
+ *
+ * Implementation of hook_uninstall().
+ */
+function verdant_share_uninstall() {
+  $module_list = array('verdant_share_7');
+  module_disable($module_list);
+}

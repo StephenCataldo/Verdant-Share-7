@@ -20,17 +20,17 @@ dependencies[] = date_views
 
 dependencies[] = location
 dependencies[] = flag
+dependencies[] = gmap
 dependencies[] = gmap_taxonomy
 dependencies[] = gmap_location
-dependencies[] = gmap
 dependencies[] = location_node
-//D7?? dependencies[] = install_profile_api  
+//D7?? Stephen doesn't think dependencies[] = install_profile_api
 /* content profile import */
-//D7?? dependencies[] = location_node
+dependencies[] = location_node
 dependencies[] = php
 dependencies[] = contact
-//D7?? dependencies[] = fieldgroup
+dependencies[] = fieldgroup
 dependencies[] = auto_nodetitle
-//D7?? dependencies[] = content_taxonomy_options
+dependencies[] = content_taxonomy_options
 			/* php filter for the smart header in the view, not sure if will
 			ultimately need? */ 
