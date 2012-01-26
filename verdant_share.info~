@@ -20,15 +20,22 @@ dependencies[] = date_views
 
 dependencies[] = location
 dependencies[] = flag
-dependencies[] = gmap_taxonomy
 dependencies[] = gmap
-//D7?? dependencies[] = install_profile_api  
+dependencies[] = gmap_taxonomy
+dependencies[] = gmap_location
+dependencies[] = location_node
+//D7?? Stephen doesn't think dependencies[] = install_profile_api
 /* content profile import */
-//D7?? dependencies[] = location_node
-dependencies[] = php
+dependencies[] = location_node
 dependencies[] = contact
-//D7?? dependencies[] = fieldgroup
+// Do we need fieldgroup?  It's part of D7 CCK
+//dependencies[] = fieldgroup
 dependencies[] = auto_nodetitle
-//D7?? dependencies[] = content_taxonomy_options
+
+// probably not needed
+//dependencies[] = content_taxonomy_options
+
 			/* php filter for the smart header in the view, not sure if will
 			ultimately need? */ 
+dependencies[] = php
+

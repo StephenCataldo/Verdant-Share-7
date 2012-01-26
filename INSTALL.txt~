@@ -1,8 +1,27 @@
 Please follow these instructions, just enabling the module
 will not work smoothly.
 
+[0] Features insufficient:
+
+    * GMap markers: enable gmap markers at
+		  admin/structure/taxonomy/means_of_transit/edit
+    * Then set the marker for each taxonomy to match the view
+      (you can of course fiddle with both the view's images ...
+       we'd love a better set of graphics!)
+    * Also edit the view for the map page to change the keys to your 
+      local server.  ** We should move this to code one day  
+      ** Also requires php.
+
+
+
+OPTIONS and INFORMATION ON CODER APPROACH
+
 Verdant_Share uses a lot of standard components (cck, flags, views) that you're
 welcome to mess with -- please post your story of how you use this module:
+
+
+You can replace the text "Please sign in to create a rideshare post"
+  with a login post.  @ToDo -- we could make this configurable
 
 [0] Giving node's locations, and setting them as cck fields, are options
 that are supposed to conflict.  In May, 2011, I'm setting locations for the
@@ -40,6 +59,12 @@ Use a Goole Map to set latitude and longitude
 Other Options: you can edit the Content Type to collect different details
 on the address or change the default country.  Locative information at /admin/structure/types/manage/share-ride
 
+Exposed Filters
+The view that comes with this module uses pre-digested one-click views, like
+"show me everyone arriving within two hour of my arrival."  The exposed filters
+are put in a block that we normally wouldn't display to users, but of course
+you can, or use it to re-write our suggested exposed-filter-links.
+
 [4] Blocks: The view will create a chart and map for people to share rides.
 People's posts are created using content_profile, shown in a block
 on the pages with the chart or map.  Go to the blocks page
@@ -55,6 +80,9 @@ Move them, tab or un-tab them, display just one or the other as preferred.
 for "Means of Transit" and enable "GMap markers."  Then go to each term
 and give them an image.  
 	@help = have you seen another module that creates a taxonomy?
+	-->Haven't seen another module, but here's a good guide to creating
+	vocabularies and terms programmatically: 
+	http://steindom.com/articles/creating-vocabularies-and-taxonomy-terms-programmatically-drupal-7
 	
 	bus = small dark green, 
 	offer = small yellow

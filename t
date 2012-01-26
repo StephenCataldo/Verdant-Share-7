@@ -490,15 +490,8 @@ function NOT_USED_FOR_CARPOOLING_AT_THIS_TIME_HERE_FOR_REFERENCE_FOR_FUTURE_WORK
 	*  use variable_get(... to get the variables set here
   */
 
-
-		// This function is more notes-in-place than real.
-
-
 function verdant_share_admin() {
 	$form = array();
-
-	// this piece worked at some point then stopped (not sure if submits
-	//   work, but at least it printed
 	$form['whatever'] = array(
 		'#type' => 'location',
 		'#title' => t('Event Location'),
@@ -508,8 +501,7 @@ function verdant_share_admin() {
 		'#description' => t("Where is everyone carpooling?"),
 		'#required' => TRUE,
 		);
-
-	/*
+/*	
 	$form['whater'] = array(
 		'#type' => 'locpick',
 		'#title' => t('Event Location'),
@@ -519,10 +511,8 @@ function verdant_share_admin() {
 		'#description' => t("Where is everyone carpooling?"),
 		'#required' => TRUE,
 	);
-		 */
-
-/*
-//Location, three pieces ... doesn't quite work.
+	
+//Location
 $form['latitude'] = array(
 '#type' => 'textfield',
 '#title' => t('Latitude'),
@@ -547,6 +537,4 @@ $form['longitude'] = array(
 $map_macro = variable_get('gmap_user_map', '[gmap|id=usermap|center=0,30|control=Large|zoom=12|width=100%|height=400px]');
 $form['gmap']['#value'] = gmap_set_location($map_macro, $form, array('latitude'=>'latitude','longitude'=>'longitude'));	
 		 */
-
-return system_settings_form($form);
 }
