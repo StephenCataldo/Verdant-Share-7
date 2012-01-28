@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the Verdant Share 7 feature.
+ */
+
+include_once('verdant_share_7.features.inc');

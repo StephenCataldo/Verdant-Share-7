@@ -1,0 +1,89 @@
+<?php
+
+// Do we want to use _enable, or _install ??  I think just _install
+// Install seems appropriate when adding data models to the application,
+// for this module, that means enabling the feature. All the other enable/disable
+// stuff should be handled appropriately by the dependencies.
+
+/**
+ * Implementation of hook_install().
+ *
+ *
+ * Permissions?  See _travelanion_permission_add
+ */
+function verdant_share_install() {
+
+
+
+  //Enable the default verdant_share_7 feature
+	$module_list = array('verdant_share_7');
+
+  module_enable($module_list);
+
+	drupal_set_message("Rideshare feature enabled. Customize views, content types,
+    and taxonomies to change rideshare behavior. See the readme.");
+}
+
+/**
+ * Define the unique permissions belonging to the rideshare module.
+ *
+ * Implements hook_permission()
+ *
+ * @return <type>
+ */
+function verdant_share_permission(){
+  return array(
+    'post rideshare' => array(
+      'title' => t('Post a rideshare entry'),
+      'description' => t('Allows a user to post a rideshare entry.'),
+    ),
+  );
+}
+
+/**
+ * When the module is enabled, give authenticated users the ability to
+ * post rideshare entries by default.
+ *
+ * @ToDo Discuss whether this should be changed on enable/disable,
+ *  or turned on when *installed* and just left untouched unless
+ *  user changes it (so they can toggle the rideshare without changing
+ *  permission.)  Which is Drupal-style?  I see advice here
+ *  http://data.agaric.com/setting-permissions-your-module-when-it-enabled
+ *  that is a little confusing, seems like the example uses enable instead
+ *  of install because it has to because of timing issues that don't 
+ *  effect us.
+ *
+ * Implements hook_enable()
+ *
+ * This is in bootstrap: 
+ *  define('DRUPAL_AUTHENTICATED_RID', 2)
+ */
+function verdant_share_enable(){
+  $permissions = array('post rideshare' => TRUE);
+  user_role_change_permissions(DRUPAL_AUTHENTICATED_RID, $permissions);
+}
+
+/**
+ * When the module is diabled, revoke the privelege to create rideshare
+ * posts.
+ *
+ * Implements hook_disable()
+ */
+function verdant_share_disable(){
+  $permissions = array('post rideshare');
+  $roles = user_roles();
+  foreach ($roles as $rid => $name) {
+    user_role_revoke_permissions($rid, $permissions);
+  }
+}
+
+
+/**
+ * Remove the default verdant_share_7 feature
+ *
+ * Implementation of hook_uninstall().
+ */
+function verdant_share_uninstall() {
+  $module_list = array('verdant_share_7');
+  module_disable($module_list);
+}
