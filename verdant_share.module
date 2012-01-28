@@ -328,9 +328,9 @@ function verdant_share_date_filter() {
 	} else {  //---> No post!
 		global $user;
 		if ($user) {
-			return array(t("Log in and create a post to see sorting options"));
-		} else {
 			return array(t("Create a post to see sorting options"));
+		} else {
+			return array(t("Log in and create a post to see sorting options"));
 		}
 	}
 }

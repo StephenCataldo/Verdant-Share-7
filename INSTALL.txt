@@ -53,7 +53,7 @@ You'll probably want to center the map on your event, and zoom
 in based on how far average people are driving. 
 
 Required:
-Use a Goole Map to set latitude and longitude 
+Use a Google Map to set latitude and longitude  
  at admin/config/content/location
 
 Other Options: you can edit the Content Type to collect different details
