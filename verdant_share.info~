@@ -5,9 +5,7 @@ version = "7.x-0.01"
 configure = admin/config/content/verdant/rides
 package = Verdant Share
 
-// Can I require the feature?
-
-// D7: work on the dependencies... 
+dependencies[] = php
 
 dependencies[] = features
 dependencies[] = views
@@ -17,25 +15,13 @@ dependencies[] = date
 dependencies[] = date_popup
 dependencies[] = date_views
      // implements "between" in views
-
 dependencies[] = location
 dependencies[] = flag
 dependencies[] = gmap
 dependencies[] = gmap_taxonomy
 dependencies[] = gmap_location
 dependencies[] = location_node
-//D7?? Stephen doesn't think dependencies[] = install_profile_api
-/* content profile import */
-dependencies[] = location_node
 dependencies[] = contact
-// Do we need fieldgroup?  It's part of D7 CCK
-//dependencies[] = fieldgroup
 dependencies[] = auto_nodetitle
 
-// probably not needed
-//dependencies[] = content_taxonomy_options
-
-//			/* php filter for the smart header in the view, not sure if will
-//			ultimately need? */ 
-dependencies[] = php
 
