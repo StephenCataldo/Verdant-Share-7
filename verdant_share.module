@@ -302,7 +302,7 @@ function verdant_share_date_filter() {
 		$check_removed = "flagged_favorites=All&unflagged_remove=1";
 
 		//--- Get base url for chart or view, eg share/ride/map
-		$base = 'share/ride/map'; //limited_url();
+		$base = limited_url();
 		
 		//--- Create the links to pass to the view --//
 		/* (note: also considered just passing the fragments, so could
