@@ -13,15 +13,58 @@
  */
 function verdant_share_install() {
 
-
-
   //Enable the default verdant_share_7 feature
 	$module_list = array('verdant_share_7');
-
   module_enable($module_list);
-
 	drupal_set_message("Rideshare feature enabled. Customize views, content types,
-    and taxonomies to change rideshare behavior. See the readme.");
+		and taxonomies to change rideshare behavior. See the readme.");
+
+	//## Fill in the taxonomy terms and gmap_taxonomy_term
+	//    See steindom.com/articles/creating-vocabularies-and-taxonomy-terms-programmatically-drupal-7
+	// Get the vid.  Note that we could create the vocab here instead of feature
+	$vid = db_query("SELECT vid FROM {taxonomy_vocabulary} 
+		WHERE machine_name = 'means_of_transit'")->fetchField();
+	//Save taxonomy term
+	$terms = array(
+		(object) array(
+			name => 'I could drive or ride',
+			description => '',
+			map => 'small orange'
+		),
+		(object) array(
+			name => 'I need a ride',
+			description => '',
+			map => 'small red'
+		),
+		(object) array(
+			name => 'Offering a seat',
+			description => '',
+			map => 'small yellow'
+		),
+		(object) array(
+			name => 'Take the bus, bicycle or walk as a group',
+			description => 'Get together and form a transit, bicycle, walking group',
+			map => 'small green'
+		),
+	);
+
+	
+	foreach ( $terms as $term ) {
+		taxonomy_term_save($term);
+		// and the map using taxonomy markers
+		db_query("INSERT INTO {gmap_taxonomy_term} 
+			('tid', 'marker')
+			VALUE (%d, %s)", $term->tid, $term->map);
+	}
+		/* trying this, will map simply be ignored? 
+	taxonomy_term_save((object) array(
+		  'name' => 'Term name',
+			  'vid' => $vid,
+			));
+		 */
+	// When inserting a new term, $term->tid will contain the term ID 
+
+
 }
 
 /**
