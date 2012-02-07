@@ -13,10 +13,11 @@
 	overflow: visible;
 }
 
-/* This removes the word Location, but not whatever throws everything */
-.vertical-tabs .vertical-tab-button {
+/* This removes the word Location, but not whatever throws everything*/
+#vertical-tabs-lis, .vertical-tabs .vertical-tab-button {
 	display: none;
 }
+
 
 #xblock-verdant-share-rideshares .location-current-coordinates-fieldset {
 	float: none;

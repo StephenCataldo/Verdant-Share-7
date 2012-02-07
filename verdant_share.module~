@@ -395,6 +395,27 @@ function verdant_share_form_alter(&$form, $form_state, $form_id) {
 		// !!! can this go to inc file?
 		$form['locations'][0]['#collapsed'] = 0;
 
+	// Clean up weirdness of Location 
+	/*** Removing vertical tabs is kinda hard. ***/
+	// tutorial http://drupal.org/node/1048644
+	//	(which was Vertical Tab and displayed disjointed.)
+	//array_walk_recursive($form, 'replace_array_values_vertical_tabs_to_fieldsets');
+	//locations is [#group] => additional_settings, which is (was) vertical_tabs
+	unset($form['locations']['#group']);	
+	$form['locations']['#weight'] = 7; // needed after removing Vertical Tabs.
+
+	// display in the unnecessary box that contains all[=1] location
+	//$form['locations']['#description'] = t("Shortcut: click the map");
+	$form['locations']['#type'] = 'no_formatting_here_please';
+	// display in the one locations allowed:
+	$form['locations'][0]['#description'] = t("Shortcut: click the map.  Or enter
+		an address close enough to your house for planning but fuzzy enough for 
+		privacy");
+
+	//$form[additional_settings] = array(); 
+	print '<pre>';
+	print_r($form);
+	print '</pre>';
 		//dsm($form['locations'] ); 
 
 	}
@@ -573,3 +594,8 @@ $form['gmap']['#value'] = gmap_set_location($map_macro, $form, array('latitude'=
 
 return system_settings_form($form);
 }
+
+
+
+
+
