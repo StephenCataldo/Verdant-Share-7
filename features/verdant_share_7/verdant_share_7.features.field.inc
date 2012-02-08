@@ -22,10 +22,12 @@ function verdant_share_7_field_default_fields() {
       'indexes' => array(),
       'module' => 'date',
       'settings' => array(
+        'cache_count' => '4',
+        'cache_enabled' => 0,
         'granularity' => array(
           'day' => 'day',
           'hour' => 'hour',
-          'minute' => 0,
+          'minute' => 'minute',
           'month' => 'month',
           'second' => 0,
           'year' => 'year',
@@ -77,7 +79,7 @@ function verdant_share_7_field_default_fields() {
         'active' => 1,
         'module' => 'date',
         'settings' => array(
-          'increment' => '15',
+          'increment' => '1',
           'input_format' => 'm/d/Y - H:i:s',
           'input_format_custom' => '',
           'label_position' => 'above',
@@ -102,10 +104,12 @@ function verdant_share_7_field_default_fields() {
       'indexes' => array(),
       'module' => 'date',
       'settings' => array(
+        'cache_count' => '4',
+        'cache_enabled' => 0,
         'granularity' => array(
           'day' => 'day',
           'hour' => 'hour',
-          'minute' => 0,
+          'minute' => 'minute',
           'month' => 'month',
           'second' => 0,
           'year' => 'year',
@@ -157,7 +161,7 @@ function verdant_share_7_field_default_fields() {
         'active' => 1,
         'module' => 'date',
         'settings' => array(
-          'increment' => '15',
+          'increment' => '1',
           'input_format' => 'm/d/Y - H:i:s',
           'input_format_custom' => '',
           'label_position' => 'above',

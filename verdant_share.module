@@ -408,7 +408,8 @@ function verdant_share_form_alter(&$form, $form_state, $form_id) {
 	//$form['locations']['#description'] = t("Shortcut: click the map");
 	$form['locations']['#type'] = 'no_formatting_here_please';
 	// display in the one locations allowed:
-	$form['locations'][0]['#description'] = t("Shortcut: click the map.  Or enter
+	$form['locations'][0]['#description'] = t("Shortcut: click the map 
+		<em>near</em> your pickup.  Or enter
 		an address close enough to your house for planning but fuzzy enough for 
 		privacy");
 

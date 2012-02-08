@@ -3,13 +3,6 @@
 /* #block-verdant-share-rideshares
  * #edit-locations-0
 */
-input {
- clear: left;
-} 
-input .form-text {
-	width: 40px;  
-	/* or a little short of the block width */
-}
 .form-item-locations-0-delete-location {
 	display: none;    
 	  /* delete the location checkbox
@@ -21,48 +14,52 @@ input .form-text {
 
 /*** tighten up block for form-entry for rideshare */
 #verdant_rideshare .node-form div.standard {
-	overflow: hidden;
+	XXXoverflow: hidden;
 }
+
+/*** Remove longitude and latitude reading / hand-entry ***/
 #block-verdant-share-rideshares div.form-item-locations-0-locpick-user-longitude,
 #block-verdant-share-rideshares div.form-item-locations-0-locpick-user-latitude {
 	display: none;
 }
+/* change this to fit your sidebar width */
+#verdant_rideshare #edit-locations-0-province,
+#verdant_rideshare #edit-locations-0-country ,
+#verdant_rideshare input.form-text {
+	width: 16em;   /* adjust to your sidebar block width */  
+	clear: left;
+}
 
+/* Clean up date */
+#verdant_rideshare input#edit-field-arrival-time-und-0-value-datepicker-popup-0 ,
+#verdant_rideshare input#edit-field-departure-time-und-0-value-datepicker-popup-0 {
+	width: 7em;
+	clear: none;
+}
+/* big enough for date and time on same line -- 
+ * this is just my personal pref, have fun */
+#edit-field-arrival-time-und-0-value,
+#edit-field-departure-time-und-0-value {
+	width: 14em;
+}
+
+.form-item-field-arrival-time-und-0-value-date {
+	float: left;
+}
+#verdant_rideshare input#edit-field-arrival-time-und-0-value-timeEntry-popup-1 {
+	width: 4em;
+}
 #oldstyle_verdant_rideshare .node-form div.standard:hover {
 	overflow: visible;
 }
 
-fieldset#edit-locations-0 {
+XXXfieldset#edit-locations-0 {
 	width: 60px;
 	max-width: 60px;
-	background: yellow;
 	overflow: none;
 }
 
-/* This removes the word Location, but not whatever throws everything
-#vertical-tabs-lis, .vertical-tabs .vertical-tab-button {
-	display: none;
-}
-	*/
-
-
-#xblock-verdant-share-rideshares .location-current-coordinates-fieldset {
-	float: none;
-}
-
-#xblock-verdant-share-rideshares .fieldset-wrapper {
-	clear: both;
-}
-#xblock-verdant-share-rideshares .vertical-tabs-panes,
-#xblock-verdant-share-rideshares .vertical-tabs-processed {
-	clear: both;
-}
-
-
-#toldstyle_verdant_rideshare .location .form-item label {
-float: none;
-	  /* not inline in tight space */
-}
+/* remove the summary of the lat/long position */
 #verdant_rideshare .location-current-coordinates-fieldset {
 	display: none;
 }
