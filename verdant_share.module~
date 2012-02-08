@@ -1,11 +1,11 @@
 <?php
 // $Id: $
 
-/********** The rideshare view *****************************************/
-
+/********** Misc setup  ************************************************/
 
 // Oy.  Lots of errors in a randomish way when this module loaded before
 // 	that one.  Do we need to do this here, or in .install ?
+//  D7: still need this?
 module_load_include('inc', 'node', 'node.pages');
 module_load_include('inc', 'verdant_share', 'verdant_share_flags'); 
 
@@ -14,9 +14,9 @@ module_load_include('inc', 'verdant_share', 'verdant_share_flags');
 
 // Create a Content Profile block for roomshare
 /**
- * Implementation of hook_block() from D6, now D7
- *
- *  Do we want to set the region?
+ * function verdant_share_block_info
+ *  hook_block implementation to create the rideshare post entry form  
+ *  (Do we want to set the region?)
  */
 function verdant_share_block_info() {
 	$blocks['rideshares'] = array(
@@ -27,7 +27,7 @@ function verdant_share_block_info() {
 		'pages' => "share/ride/*
 	share/ride",
 );
-	return $blocks; // Array ( [rideshare] => Array ( [info] => Ride Share Profile Block [status] => 1 [cache] => -1 [visibility] => 1 [pages] => share/ride/* share/ride ) )
+	return $blocks; 
 
 }
 function verdant_share_block_view($delta = '') {
@@ -347,78 +347,38 @@ function verdant_share_form_alter(&$form, $form_state, $form_id) {
 	if ( $form_id == 'share_ride_node_form') {
 		// add some css ... might need this more often?
 		drupal_add_css(drupal_get_path('module', 'verdant_share') .'/css/verdant_share_extra_style.css');
-		// Redirect
-		//not ABSOLUTELY positive this can't be tampered with, 
-		//	$form['#redirect'] = $_GET['q']; 
-		//	so hard code to be safe
-		if ( $_GET['q'] == 'share/ride/map' ) {
-			$form['#redirect'] = 'NOLONGERSEETHISRIGHTshare/ride/map';
-			$form_state['redirect'] = 'NOLONGERSEETHISRIGHTshare/ride/map';
-
-		} else {
-			$form['#redirect'] = 'share/NOLONGERSEETHISRIGHTride/chart';
-			$form_state['redirect'] = 'share/NOLONGERSEETHISRIGHTride/map';
-		}
-		// @ToDo warning: docs tell admin ok to change these URLS !!!
-
 	
-		// Redirects not working, try again:
+		// Redirects not working in D6 style, try again:
 		$form['actions']['submit']['#submit'][] = 'share_ride_submit';
 
-
-		// Changing the form display ... some of this written in D6
-		//  so look for b.s. that doesn't do anything
-		//D6$form['body_field']['body']['#rows'] = 3;
-		//D6$form['body_field']['teaser_include']['#access'] = FALSE;
-
 		$form['field_description']['#after_build'][] = 'verdant_reformat_textbox';
-		/*D7, these efforts fail...
-		unset($form['field_description']['und'][0]['format']);
-		unset($form['field_description']['und'][0]['#columns'][1]); // = format
-			this sure looks good, removes the column, must not be it.
-		 */
-		//unset($form['body_field']['format']);
 		$form['comment_settings']['#access'] = FALSE;
 		$form['menu']['#access'] = FALSE;
 		$form['path']['#access'] = false;
 		$form['author']['#access'] = false;
 		$form['options']['#access'] = false;
 		$form['revision_information']['#access'] = false;
-		// Want to remove long, lat boxes and some text
-
-		// Keep form super-simple	 for users
-		/*print "<pre>";
-		//Thisisn't working yet.	
-		print_r($form['field_description']['und'][0]['#columns']);
-		print "</pre>";*/
 
 		// !!! can this go to inc file?
 		$form['locations'][0]['#collapsed'] = 0;
 
-	// Clean up weirdness of Location 
-	/*** Removing vertical tabs is kinda hard. ***/
-	// tutorial http://drupal.org/node/1048644
-	//	(which was Vertical Tab and displayed disjointed.)
-	//array_walk_recursive($form, 'replace_array_values_vertical_tabs_to_fieldsets');
-	//locations is [#group] => additional_settings, which is (was) vertical_tabs
-	unset($form['locations']['#group']);	
-	$form['locations']['#weight'] = 7; // needed after removing Vertical Tabs.
+		// Clean up weirdness of Location, caused by VerticalTabs
+		/*** Removing vertical tabs is kinda hard. ***/
+		// tutorial http://drupal.org/node/1048644
+		unset($form['locations']['#group']);	
+		$form['locations']['#weight'] = 7; // needed after removing Vertical Tabs.
 
-	// display in the unnecessary box that contains all[=1] location
-	//$form['locations']['#description'] = t("Shortcut: click the map");
-	$form['locations']['#type'] = 'no_formatting_here_please';
-	// display in the one locations allowed:
-	$form['locations'][0]['#description'] = t("Shortcut: click the map 
-		<em>near</em> your pickup.  Or enter
-		an address close enough to your house for planning but fuzzy enough for 
-		privacy");
+		// display in the unnecessary box that contains all[=1] location
+		$form['locations']['#type'] = 'no_formatting_here_please';
+		// display in the one locations allowed:
+		$form['locations'][0]['#description'] = t("Shortcut: click the map 
+			<em>near</em> your pickup.  Or enter
+			an address close enough to your house for planning but fuzzy enough for 
+			privacy");
 
-	//$form[additional_settings] = array(); 
-	/*print '<pre>';
-	print_r($form);
-	print '</pre>';*/
-		//dsm($form['locations'] ); 
-
+		/*print '<pre>';
+		print_r($form);
+		print '</pre>';*/
 	}
 }
 
