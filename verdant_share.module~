@@ -381,9 +381,11 @@ function verdant_share_form_alter(&$form, $form_state, $form_id) {
 			an address close enough to your house for planning but fuzzy enough for 
 			privacy");
 
-		print '<pre>';
+		/*
+			print '<pre>';
 		print_r($form);
 		print '</pre>';
+		 */
 	}
 }
 
