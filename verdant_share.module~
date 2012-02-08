@@ -413,9 +413,9 @@ function verdant_share_form_alter(&$form, $form_state, $form_id) {
 		privacy");
 
 	//$form[additional_settings] = array(); 
-	print '<pre>';
+	/*print '<pre>';
 	print_r($form);
-	print '</pre>';
+	print '</pre>';*/
 		//dsm($form['locations'] ); 
 
 	}

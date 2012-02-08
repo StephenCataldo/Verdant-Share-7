@@ -1,16 +1,42 @@
 
 /* <fieldset id="edit-locations-0" class="location form-wrapper"> */
-
+/* #block-verdant-share-rideshares
+ * #edit-locations-0
+*/
+input {
+ clear: left;
+} 
+input .form-text {
+	width: 40px;  
+	/* or a little short of the block width */
+}
+.form-item-locations-0-delete-location {
+	display: none;    
+	  /* delete the location checkbox
+		   not sure about removing it, but think so */
+}
 /*** This is from gmic2010, and not sure if it is implemented or not ****/
 /* needs lots of cleanup just to see what is being used and what isn't,
  * after the first section */
 
 /*** tighten up block for form-entry for rideshare */
-#oldstyle_verdant_rideshare .node-form div.standard {
+#verdant_rideshare .node-form div.standard {
 	overflow: hidden;
 }
+#block-verdant-share-rideshares div.form-item-locations-0-locpick-user-longitude,
+#block-verdant-share-rideshares div.form-item-locations-0-locpick-user-latitude {
+	display: none;
+}
+
 #oldstyle_verdant_rideshare .node-form div.standard:hover {
 	overflow: visible;
+}
+
+fieldset#edit-locations-0 {
+	width: 60px;
+	max-width: 60px;
+	background: yellow;
+	overflow: none;
 }
 
 /* This removes the word Location, but not whatever throws everything
