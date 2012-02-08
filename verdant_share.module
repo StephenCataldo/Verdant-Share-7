@@ -362,6 +362,11 @@ function verdant_share_form_alter(&$form, $form_state, $form_id) {
 		// !!! can this go to inc file?
 		$form['locations'][0]['#collapsed'] = 0;
 
+		global $user;
+		$title = 'Rideshare for ' . $user->name;
+		$form['title']['#default_value'] = 'Rideshare post for ' . $user->name;
+		$form['title']['#access'] = false;	
+
 		// Clean up weirdness of Location, caused by VerticalTabs
 		/*** Removing vertical tabs is kinda hard. ***/
 		// tutorial http://drupal.org/node/1048644
@@ -376,9 +381,9 @@ function verdant_share_form_alter(&$form, $form_state, $form_id) {
 			an address close enough to your house for planning but fuzzy enough for 
 			privacy");
 
-		/*print '<pre>';
+		print '<pre>';
 		print_r($form);
-		print '</pre>';*/
+		print '</pre>';
 	}
 }
 
