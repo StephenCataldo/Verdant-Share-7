@@ -28,16 +28,11 @@ I need a ride;;;;0;0;0;0;0
 Offering a seat;;;;0;0;0;0;0
 Take the bus, bicycle or walk as a group;;;Let\'s form a transit, bicycle, walking group;0;0;0;0;0
 
-[1B] Auto Nodetitles, Sorry.  admin/structure/types/manage/share-ride
-  Under "Automatic Title Generation" click
-  "Automatically generate the title and hide the title field" 
-  and then paste in:
-  <?php
-		global $user;
-		return 'Rideshare for ' . $user->name;
-	?>
-  and click "Evaluate PHP in pattern." 
-  @ToDo, low priority but easy?: replace auto_nodetitle dependency with code
+
+[1C] Problem with views module for contact, need to be patched....
+got to views directory
+wget drupal.org/files/issues/views_contact_link-1021590-54.patch
+patch -p1 < views_contact_link-1021590-54.patch
 
 [2] Maps and Locations
 
@@ -69,7 +64,15 @@ alternative text:
 	-->Haven't seen another module, but here's a good guide to creating
 	vocabularies and terms programmatically: 
 	http://steindom.com/articles/creating-vocabularies-and-taxonomy-terms-programmatically-drupal-7
-	
+
+try...  Combine that with simple gmap_taxonomy_term
+tid, marker
+1 	small orange
+2 	small red
+3 	small yellow
+4 	small green	
+
+
 	bus = small dark green, 
 	offer = small yellow
 	either = small organge

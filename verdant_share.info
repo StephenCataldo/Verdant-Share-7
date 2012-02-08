@@ -22,6 +22,5 @@ dependencies[] = gmap_taxonomy
 dependencies[] = gmap_location
 dependencies[] = location_node
 dependencies[] = contact
-dependencies[] = auto_nodetitle
 
 

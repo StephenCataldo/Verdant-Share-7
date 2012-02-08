@@ -26,36 +26,43 @@ function verdant_share_install() {
 		WHERE machine_name = 'means_of_transit'")->fetchField();
 	//Save taxonomy term
 	$terms = array(
-		array(
+		(object) array(
 			name => 'I could drive or ride',
 			description => '',
 			map => 'small orange'
 		),
-		array(
+		(object) array(
 			name => 'I need a ride',
 			description => '',
 			map => 'small red'
 		),
-		array(
+		(object) array(
 			name => 'Offering a seat',
 			description => '',
 			map => 'small yellow'
 		),
-		array(
+		(object) array(
 			name => 'Take the bus, bicycle or walk as a group',
 			description => 'Get together and form a transit, bicycle, walking group',
 			map => 'small green'
 		),
 	);
 
-
-
-
+	
+	foreach ( $terms as $term ) {
+		taxonomy_term_save($term);
+		// and the map using taxonomy markers
+		db_query("INSERT INTO {gmap_taxonomy_term} 
+			('tid', 'marker')
+			VALUE (%d, %s)", $term->tid, $term->map);
+	}
+		/* trying this, will map simply be ignored? 
 	taxonomy_term_save((object) array(
 		  'name' => 'Term name',
 			  'vid' => $vid,
 			));
-
+		 */
+	// When inserting a new term, $term->tid will contain the term ID 
 
 
 }

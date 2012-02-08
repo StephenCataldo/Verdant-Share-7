@@ -1,9 +1,6 @@
 <?php
 
 // Do we want to use _enable, or _install ??  I think just _install
-// Install seems appropriate when adding data models to the application,
-// for this module, that means enabling the feature. All the other enable/disable
-// stuff should be handled appropriately by the dependencies.
 
 /**
  * Implementation of hook_install().
